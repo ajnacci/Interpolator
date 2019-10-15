@@ -13,13 +13,13 @@ import numpy as np
 import mpmath
 
 # Generates points on a region given a distribution scheme.
-def point_generator(N, distribution="even", extra_args=dict()):
+def point_generator(N, distribution="Even", extra_args=dict()):
   xi = None
-  if(distribution == "even"):
+  if(distribution == "Even"):
     interval_lower = extra_args['interval_lower']
     interval_width = extra_args['interval_width']
     xi = [interval_lower + (interval_width*i)/N for i in range(N+1)]
-  if(distribution == "cotangent"):
+  if(distribution == "Cotangent"):
     xi = [float(mpmath.cot((i+(math.copysign(1, i-(N+1)/2)-N)/2)*math.pi/(N+1))/2) for i in range(N+1)]
   return sorted(xi)
 
@@ -319,7 +319,7 @@ def generate_splines(f, s, xi, N):
     
   return spline_list
   
-def determine_coefficients(f, N, process, dist, extra_args=dict()):
+def determine_coefficients(f, N, process, dist="Even", extra_args=dict()):
   xi = point_generator(N, distribution=dist, extra_args=extra_args)
   if process == "Newton":
     # c[i][j] will represent f[x_(i)...x_(i+j)]. We calculate it efficiently
